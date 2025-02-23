@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+ 
+    <!--
+    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+    	documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+ 
+ 	<!-- Uncomment the changeset below if you want to make the Item class persistable, see also Item and InsuranceDaoTest -->
+    <changeSet id="organization-18:02:2025:5:19" author="abertnamanya">
+        <preConditions>
+            <not>
+                <tableExists tableName="organization"/>
+            </not>
+        </preConditions>
+        <comment>
+            Creating the organization table
+        </comment>
+        <createTable tableName="organization">
+            <column name="organization_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(400)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="uuid" type="char(38)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="creator" type="int"/>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="datetime"/>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_retired" type="datetime" />
+            <column name="retire_reason" type="varchar(255)" defaultValue="null" />
+            <column name="retired" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="retired_by" type="int" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="org_creator_fk"
+                                 baseTableName="organization" baseColumnNames="creator"
+                                 referencedTableName="users" referencedColumnNames="user_id"/>
+        <addForeignKeyConstraint constraintName="org_changed_by_fk"
+                                 baseTableName="organization" baseColumnNames="changed_by"
+                                 referencedTableName="users" referencedColumnNames="user_id"/>
+        <addForeignKeyConstraint constraintName="org_retired_by_fk"
+                                 baseTableName="organization" baseColumnNames="retired_by"
+                                 referencedTableName="users" referencedColumnNames="user_id"/>
+    </changeSet>
+
+    <changeSet author="abertnamanya (generated)" id="35464535-5767">
+
+        <preConditions>
+                <tableExists tableName="organization"/>
+        </preConditions>
+
+        <insert tableName="organization">
+            <column name="organization_id" valueNumeric="1"/>
+            <column name="uuid" value="49301ee3-359c-4522-b5bc-f9f13a662a85"/>
+            <column name="name" value="Cash Patient"/>
+            <column name="description" value="Cash Patient"/>
+            <column name="date_created" valueDate="2025-01-01"/>
+        </insert>
+        <insert tableName="organization">
+            <column name="organization_id" valueNumeric="2"/>
+            <column name="uuid" value="2d01b562-4c56-406f-bf03-ea060fdbcca7"/>
+            <column name="name" value="First Mutual Health"/>
+            <column name="description" value="First Mutual Health"/>
+            <column name="date_created" valueDate="2025-01-01"/>
+        </insert>
+        <insert tableName="organization">
+            <column name="organization_id" valueNumeric="3"/>
+            <column name="uuid" value="50fc2b38-264f-408f-8c39-7e5613749c05"/>
+            <column name="name" value="Fidelity Life Medical Aid"/>
+            <column name="description" value="Fidelity Life Medical Aid"/>
+            <column name="date_created" valueDate="2025-01-01"/>
+        </insert>
+        <insert tableName="organization">
+            <column name="organization_id" valueNumeric="4"/>
+            <column name="uuid" value="ebc1c766-cf3a-4308-80df-39e06e4112f8"/>
+            <column name="name" value="Altfin Medical Aid Scheme"/>
+            <column name="description" value="Altfin Medical Aid Scheme"/>
+            <column name="date_created" valueDate="2025-01-01"/>
+        </insert>
+        <insert tableName="organization">
+            <column name="organization_id" valueNumeric="5"/>
+            <column name="uuid" value="996b39c8-40a3-4120-af61-7e5e2a923c0d"/>
+            <column name="name" value="Health International Medical Aid Scheme (HIMAS)"/>
+            <column name="description" value="Health International Medical Aid Scheme (HIMAS)"/>
+            <column name="date_created" valueDate="2025-01-01"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
